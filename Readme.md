@@ -17,7 +17,7 @@ This project is a BitTorrent protocol implementation in Go, aimed at providing e
 ## Features (To-Do)
 
 - [x] **Bencode Decoder**: Decode Bencoded data used in .torrent files.
-- [ ] **Parse .torrent File**: Extract metadata from .torrent files, including file names, sizes, and piece information(Metainfo File Structure)
+- [X] **Parse .torrent File**: Extract metadata from .torrent files, including file names, sizes, and piece information(Metainfo File Structure)
 - [ ] **Piece Hashes**: Generate and verify piece hashes to ensure data integrity during download.
 - [ ] **Discover Peers**: Implement peer discovery methods to find other peers in the torrent swarm.
 - [ ] **Peers Handshake**: Handle the initial handshake process between peers to establish connections.
