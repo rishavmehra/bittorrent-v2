@@ -32,7 +32,7 @@ This project is a BitTorrent protocol implementation in Go, aimed at providing e
    https://wiki.theory.org/BitTorrentSpecification#Metainfo_File_Structure
 
 For example, here's the **linuxmint-18.3-cinnamon-64bit.iso** metainfo file, decoded:
-```bash
+```elixir
 iex> Metatorrent.decode(File.read! "linuxmint-18.3-cinnamon-64bit.iso.torrent")
 %Metatorrent.Metainfo{
   announce: "https://torrents.linuxmint.com/announce.php",
