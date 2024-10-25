@@ -31,6 +31,13 @@ func main() {
 		}
 		fmt.Printf("Tracker URL: %s\n", torrent.Announce)
 		fmt.Printf("Lenght: %d\n", torrent.Info.Length)
+		fmt.Printf("name: %s\n", torrent.Info.Name)
+		infoHash, err := torrent.InfoHash()
+		if err != nil {
+			fmt.Println(err)
+		} else {
+			fmt.Printf("Info Hash: %s\n", infoHash)
+		}
 		return
 	default:
 		fmt.Println("Unknown command:", cmd)
