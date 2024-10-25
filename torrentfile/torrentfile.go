@@ -1,6 +1,8 @@
 package torrentfile
 
 import (
+	"bytes"
+	"crypto/sha1"
 	"fmt"
 	"os"
 
@@ -100,4 +102,17 @@ func NewTorrentFile(filePath string) (*TorrentFile, error) {
 	}
 
 	return torrent, nil
+}
+
+func (torrent *TorrentFile) InfoHash() (string, error) {
+	data, err := os.ReadFile(torrent.FilePath)
+	if err != nil {
+		return "", err
+	}
+
+	infostart := bytes.Index(data, []byte("4:info")) + 6 // is for 4:info becuase its 6words for more read (bytes.Index)pkg
+	if infostart < 0 {
+		return "", fmt.Errorf("in torrent file there no \"info\" field")
+	}
+	return fmt.Sprintf("%x", sha1.Sum(data[infostart:len(data)-1])), nil
 }
