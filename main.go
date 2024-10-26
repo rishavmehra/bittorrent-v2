@@ -38,10 +38,17 @@ func main() {
 		} else {
 			fmt.Printf("Info Hash: %s\n", infoHash)
 		}
+		fmt.Printf("\n%x\n", len(torrent.Info.Pieces))
+		fmt.Printf("Pieces Length:%d\n", torrent.Info.PieceLength)
+		fmt.Printf("Pieces Hash: \n")
+		for i := 0; i < len(torrent.Info.Pieces); i = i + 20 {
+
+			fmt.Printf("\n%x\n", i)
+			fmt.Printf("%x\n", torrent.Info.Pieces[i:i+20])
+		}
 		return
 	default:
 		fmt.Println("Unknown command:", cmd)
 	}
 	os.Exit(1)
-
 }
