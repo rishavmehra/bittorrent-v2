@@ -104,15 +104,15 @@ func NewTorrentFile(filePath string) (*TorrentFile, error) {
 	return torrent, nil
 }
 
-func (torrent *TorrentFile) InfoHash() (string, error) {
+func (torrent *TorrentFile) InfoHash() ([20]byte, error) {
 	data, err := os.ReadFile(torrent.FilePath)
 	if err != nil {
-		return "", err
+		return [20]byte{}, err
 	}
 
 	infostart := bytes.Index(data, []byte("4:info")) + 6 // is for 4:info becuase its 6words for more read (bytes.Index)pkg
 	if infostart < 0 {
-		return "", fmt.Errorf("in torrent file there no \"info\" field")
+		return [20]byte{}, fmt.Errorf("in torrent file there no \"info\" field")
 	}
-	return fmt.Sprintf("%x", sha1.Sum(data[infostart:len(data)-1])), nil
+	return sha1.Sum(data[infostart : len(data)-1]), nil
 }

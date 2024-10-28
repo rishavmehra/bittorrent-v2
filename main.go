@@ -19,6 +19,7 @@ func main() {
 		decoded, err := bencode.DecodeBencode(bencodeValue)
 		if err != nil {
 			fmt.Println(err)
+			os.Exit(1)
 		}
 		jsonOutput, _ := json.Marshal(decoded)
 		fmt.Println(string(jsonOutput))
@@ -28,6 +29,7 @@ func main() {
 		torrent, err := torrentfile.NewTorrentFile(filePath)
 		if err != nil {
 			fmt.Println(err)
+			os.Exit(1)
 		}
 		fmt.Printf("Tracker URL: %s\n", torrent.Announce)
 		fmt.Printf("Lenght: %d\n", torrent.Info.Length)
@@ -35,18 +37,33 @@ func main() {
 		infoHash, err := torrent.InfoHash()
 		if err != nil {
 			fmt.Println(err)
+			os.Exit(1)
 		} else {
-			fmt.Printf("Info Hash: %s\n", infoHash)
+			fmt.Printf("Info Hash: %x\n", infoHash)
 		}
-		fmt.Printf("\n%x\n", len(torrent.Info.Pieces))
 		fmt.Printf("Pieces Length:%d\n", torrent.Info.PieceLength)
 		fmt.Printf("Pieces Hash: \n")
 		for i := 0; i < len(torrent.Info.Pieces); i = i + 20 {
-
-			fmt.Printf("\n%x\n", i)
 			fmt.Printf("%x\n", torrent.Info.Pieces[i:i+20])
 		}
 		return
+
+	case "peers":
+		filePath := os.Args[2]
+		file, err := torrentfile.NewTorrentFile(filePath)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		tracker := &torrentfile.TrackerReq{PeerID: "00000000000000000000", Port: 1234, Compact: 1}
+		response, err := file.GetTrackerResponse(tracker)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		for i := 0; i < len(response.Peers); i++ {
+			fmt.Println(response.Peers[i])
+		}
 	default:
 		fmt.Println("Unknown command:", cmd)
 	}
