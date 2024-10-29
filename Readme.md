@@ -21,13 +21,14 @@ This project is a BitTorrent protocol implementation in Go, aimed at providing e
 - [X] **Info Hash**
 - [X] **Piece Hashes**: Generate and verify piece hashes to ensure data integrity during download.
 - [X] **Tracker Request(find peers)**: Implement peer discovery methods to find other peers in the torrent swarm.
-- [ ] **Peers Handshake**: Handle the initial handshake process between peers to establish connections.
+- [X] **Peers Handshake**: Handle the initial handshake process between peers to establish connections.
 - [ ] **Download Piece**: Download individual pieces of the file from peers.
 - [ ] **Full File**: Assemble and save the complete file after all pieces have been downloaded.
 
-https://binspec.ccio.dev/
----
 
+https://binspec.ccio.dev/
+
+---
 - Bencode Decoder
    https://wiki.theory.org/BitTorrentSpecification#Bencoding
 
@@ -66,6 +67,7 @@ iex> Metatorrent.decode(File.read! "linuxmint-18.3-cinnamon-64bit.iso.torrent")
   info_hash ->  urlencoded 20-byte SHA1 hash of the value of the info key from the Metainfo file. Note that the value will be a bencoded dictionary, given the definition of the info key above
 ---
 - Piece Hashes \
+  Piece length and piece hashes are specified in the info dictionary 
 
 ---
 - Tracker Request(Find Peers) [Detailed information](https://wiki.theory.org/BitTorrentSpecification#Tracker_HTTP.2FHTTPS_Protocol)
@@ -79,3 +81,7 @@ iex> Metatorrent.decode(File.read! "linuxmint-18.3-cinnamon-64bit.iso.torrent")
 
 
  http://bttracker.debian.org:6969/announce?compact=1&downloaded=0&info_hash=%1B%D0%88%EE%91f%A0b%CFJ%F0%9C%F9%97+%FAn%1A13&left=661651456&peer_id=%C1%935%12%CB+k%F7%9F~%90V%9F%BF%A4%D1%CF%065%EA&port=6881&uploaded=0
+
+---
+
+- **Peers Handshake**
